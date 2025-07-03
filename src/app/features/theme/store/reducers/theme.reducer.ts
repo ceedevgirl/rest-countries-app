@@ -13,9 +13,8 @@ export const initialState: State = {
 
 export const reducer = createReducer(
   initialState,
-  on(ThemeActions.themeThemes, state => state),
-  on(ThemeActions.themeThemesSuccess, (state, action) => state),
-  on(ThemeActions.themeThemesFailure, (state, action) => state),
+  on(ThemeActions.nThemes, state => state),
+
 );
 
 export const themeFeature = createFeature({
