@@ -11,6 +11,7 @@ export class CountryEffects {
   private actions$ = inject(Actions);
   private api = inject(CountryApiService);
 
+  // Load all countries
   loadCountries$ = createEffect(() =>
     this.actions$.pipe(
       ofType(CountryActions.loadCountries),
@@ -21,6 +22,27 @@ export class CountryEffects {
           map((countries) => CountryActions.loadCountriesSuccess({ countries })),
           catchError((error) => {
             console.error('[Effect] loadCountriesFailure:', error);
+            return of(CountryActions.loadCountriesFailure({ error }));
+          })
+        )
+      )
+    )
+  );
+
+  // Load single country by code
+  loadCountryByCode$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(CountryActions.loadCountryByCode),
+      tap(({ code }) => console.log('[Effect] loadCountryByCode action received:', code)),
+      mergeMap(({ code }) =>
+        this.api.getCountryByCode(code).pipe(
+          map((countryArray) => {
+            const country = countryArray[0]; // API returns an array
+            console.log('[Effect] Country loaded:', country?.name?.common);
+            return CountryActions.loadCountryByCodeSuccess({ country });
+          }),
+          catchError((error) => {
+            console.error('[Effect] loadCountryByCode failed:', error);
             return of(CountryActions.loadCountriesFailure({ error }));
           })
         )

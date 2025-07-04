@@ -1,0 +1,42 @@
+<section class="detail-container">
+  <a routerLink="/" class="back-btn">← Back</a>
+
+  @let country = country$ | async;
+  @if (country) {
+    <div class="country-detail">
+      <img class="flag" [src]="country.flags.svg" [alt]="country.name.common" />
+
+      <div class="info">
+        <h2>{{ country.name.common }}</h2>
+        <div class="columns">
+          <div class="column">
+            <p><strong>Native Name:</strong> {{ getNativeName(country) }}</p>
+            <p><strong>Population:</strong> {{ country.population | number }}</p>
+            <p><strong>Region:</strong> {{ country.region }}</p>
+            <p><strong>Sub Region:</strong> {{ country.subregion }}</p>
+            <p><strong>Capital:</strong> {{ country.capital[0] || 'N/A' }}</p>
+          </div>
+
+          <div class="column">
+            <p><strong>Top Level Domain:</strong> {{ country.tld[0] }}</p>
+            <p><strong>Currencies:</strong> {{ getCurrencies(country) }}</p>
+            <p><strong>Languages:</strong> {{ getLanguages(country) }}</p>
+          </div>
+        </div>
+
+        <div class="borders">
+          <strong>Border Countries:</strong>
+          <div class="border-list">
+            @if (country.borders.length > 0) {
+              @for (code of country.borders; track code) {
+                <a [routerLink]="['/details', code]" class="border-tag">{{ code }}</a>
+              }
+            } @else {
+              <span>N/A</span>
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  }
+</section>

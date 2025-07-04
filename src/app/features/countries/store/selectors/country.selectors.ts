@@ -2,7 +2,7 @@ import { countriesFeature } from '../reducers/country.reducer';
 import { createSelector } from '@ngrx/store';
 import { Country } from '../../../../core/models/country.interface';
 
-// Access state using correct selectors from `createFeature`
+// Base selectors from createFeature
 export const {
   selectCountriesState,
   selectLoading,
@@ -11,9 +11,9 @@ export const {
   selectFilterRegion,
 } = countriesFeature;
 
-// Derived Selector: Filtered Countries
+// Filtered list of countries for list page
 export const selectFilteredCountries = createSelector(
-  countriesFeature.selectCountriesState,
+  selectCountriesState,
   selectSearchQuery,
   selectFilterRegion,
   (state, query, region) => {
@@ -26,9 +26,17 @@ export const selectFilteredCountries = createSelector(
     }
 
     if (region) {
-      result = result.filter((c) => c.region.toLowerCase() === region.toLowerCase());
+      result = result.filter((c) =>
+        c.region.toLowerCase() === region.toLowerCase()
+      );
     }
 
     return result;
   }
+);
+
+// ✅ Single country for details page
+export const selectSelectedCountry = createSelector(
+  selectCountriesState,
+  (state) => state.selectedCountry
 );

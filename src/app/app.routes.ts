@@ -8,13 +8,13 @@ export const routes: Routes = [
     component: CountryListComponent,
     pathMatch: 'full',
   },
-  {
-    path: 'countries/:code',
-    loadComponent: () =>
-      import('./features/countries/pages/country-details/country-details.component').then(
-        m => m.CountryDetailsComponent
-      ),
-  },
+ {
+  path: 'details/:code', // ✅ correct spelling
+  loadComponent: () =>
+    import('./features/countries/pages/country-detail/country-detail.component').then(
+      m => m.CountryDetailComponent
+    ),
+},
   {
     path: '**',
     redirectTo: '', // fallback to home

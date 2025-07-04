@@ -1,0 +1,207 @@
+@use '../../../../shared/styles/variables' as *;
+@use '../../../../shared/styles/mixins' as *;
+
+.detail-container {
+  @include container;
+  padding-top: $spacing-xl;
+
+  .back-btn {
+    @include button-base;
+    padding: 0.5rem 1.5rem;
+    margin-bottom: $spacing-2xl;
+    display: inline-flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: $font-size-base;
+    font-weight: $font-weight-light;
+    gap: $spacing-sm;
+  }
+
+  .country-detail {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-2xl;
+
+    // Mobile layout - vertical stacking
+    .flag {
+      width: 100%;
+      height: auto;
+      max-width: 320px;
+      border-radius: 8px;
+      object-fit: cover;
+      margin-bottom: $spacing-lg;
+    }
+
+    .info {
+      width: 100%;
+
+      h2 {
+        font-size: $font-size-2xl;
+        font-weight: $font-weight-extrabold;
+        margin-bottom: $spacing-lg;
+        color: var(--text-color);
+      }
+
+      .columns {
+        display: flex;
+        flex-direction: column;
+        gap: $spacing-lg;
+
+        .column {
+          p {
+            font-size: $font-size-base;
+            margin: $spacing-xs 0;
+            line-height: 1.6;
+            color: var(--text-color);
+
+            strong {
+              font-weight: $font-weight-semibold;
+              margin-right: $spacing-xs;
+            }
+          }
+        }
+      }
+
+      .borders {
+        margin-top: $spacing-xl;
+
+        strong {
+          display: block;
+          margin-bottom: $spacing-sm;
+          font-size: $font-size-base;
+          font-weight: $font-weight-semibold;
+          color: var(--text-color);
+        }
+
+        .border-list {
+          display: flex;
+          flex-wrap: wrap;
+          gap: $spacing-sm;
+
+          .border-tag {
+            padding: 0.4rem 1.2rem;
+            background: var(--element-color);
+            box-shadow: $shadow-sm;
+            border-radius: 6px;
+            font-size: $font-size-sm;
+            font-weight: $font-weight-light;
+            text-decoration: none;
+            color: var(--text-color);
+            transition: all 0.2s ease;
+
+            &:hover {
+              background: var(--element-hover-color);
+            }
+          }
+
+          span {
+            color: var(--text-color);
+            font-size: $font-size-sm;
+          }
+        }
+      }
+    }
+
+    // Desktop layout - horizontal side by side
+    @media (min-width: 768px) {
+      flex-direction: row;
+      align-items: flex-start;
+      gap: $spacing-3xl;
+
+      .flag {
+        flex: 1;
+        max-width: 50%;
+        margin-bottom: 0;
+      }
+
+      .info {
+        flex: 1;
+        padding-left: $spacing-lg;
+
+        h2 {
+          font-size: $font-size-3xl;
+          margin-bottom: $spacing-xl;
+        }
+
+        .columns {
+          flex-direction: row;
+          gap: $spacing-2xl;
+          margin-bottom: $spacing-xl;
+
+          .column {
+            flex: 1;
+
+            p {
+              margin: $spacing-sm 0;
+            }
+          }
+        }
+
+        .borders {
+          margin-top: $spacing-2xl;
+
+          .border-list {
+            margin-top: $spacing-sm;
+          }
+        }
+      }
+    }
+  }
+}
+
+// Specific mobile adjustments
+@media (max-width: 767px) {
+  .detail-container {
+    padding-top: $spacing-lg;
+
+    .back-btn {
+      padding: 0.5rem 1rem;
+      margin-bottom: $spacing-xl;
+      font-size: $font-size-sm;
+    }
+
+    .country-detail {
+      gap: $spacing-xl;
+
+      .flag {
+        max-width: 100%;
+      }
+
+      .info {
+        h2 {
+          font-size: $font-size-xl;
+          margin-bottom: $spacing-md;
+        }
+
+        .columns {
+          gap: $spacing-md;
+
+          .column {
+            p {
+              font-size: $font-size-sm;
+              margin: 2px 0;
+            }
+          }
+        }
+
+        .borders {
+          margin-top: $spacing-lg;
+
+          strong {
+            font-size: $font-size-sm;
+            margin-bottom: $spacing-xs;
+          }
+
+          .border-list {
+            gap: $spacing-xs;
+
+            .border-tag {
+              padding: 0.3rem 0.8rem;
+              font-size: 12px;
+            }
+          }
+        }
+      }
+    }
+  }
+}

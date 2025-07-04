@@ -1,7 +1,7 @@
 // src/app/features/countries/store/country.actions.ts
 
 import { createAction, props } from '@ngrx/store';
-import { Country } from '../../../../core/models/country.interface'; 
+import { Country } from '../../../../core/models/country.interface';
 
 // API Actions
 const loadCountries = createAction('[Country] Load Countries');
@@ -14,6 +14,17 @@ const loadCountriesSuccess = createAction(
 const loadCountriesFailure = createAction(
   '[Country] Load Countries Failure',
   props<{ error: unknown }>()
+);
+
+// Single country detail action
+const loadCountryByCode = createAction(
+  '[Country] Load Country By Code',
+  props<{ code: string }>()
+);
+
+const loadCountryByCodeSuccess = createAction(
+  '[Country] Load Country By Code Success',
+  props<{ country: Country }>()
 );
 
 // Clear countries from state
@@ -38,4 +49,6 @@ export const CountryActions = {
   clearCountries,
   setSearchQuery,
   setFilterRegion,
+  loadCountryByCode,
+  loadCountryByCodeSuccess
 };

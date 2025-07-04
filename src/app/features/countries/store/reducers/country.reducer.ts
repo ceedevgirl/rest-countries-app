@@ -1,4 +1,3 @@
-// country.reducer.ts
 import { createFeature, createReducer, on } from '@ngrx/store';
 import { CountryActions } from '../actions/country.actions';
 import { Country } from '../../../../core/models/country.interface';
@@ -9,6 +8,7 @@ export interface CountryState {
   error: unknown;
   searchQuery: string;
   filterRegion: string;
+  selectedCountry: Country | null;
 }
 
 export const initialState: CountryState = {
@@ -17,14 +17,14 @@ export const initialState: CountryState = {
   error: null,
   searchQuery: '',
   filterRegion: '',
+  selectedCountry: null,
 };
 
 const countryReducer = createReducer(
   initialState,
-  on(CountryActions.loadCountries, (state) => ({
-    ...state,
-    loading: true,
-  })),
+
+  // Load all countries
+  on(CountryActions.loadCountries, (state) => ({ ...state, loading: true })),
   on(CountryActions.loadCountriesSuccess, (state, { countries }) => ({
     ...state,
     countries,
@@ -37,26 +37,37 @@ const countryReducer = createReducer(
     error,
   })),
 
+  // Detail page support
+  on(CountryActions.loadCountryByCode, (state) => ({
+    ...state,
+    loading: true,
+    error: null,
+  })),
+  on(CountryActions.loadCountryByCodeSuccess, (state, { country }) => ({
+    ...state,
+    selectedCountry: country,
+    loading: false,
+    error: null,
+  })),
+
+  // Clear and UI actions
   on(CountryActions.clearCountries, (state) => ({
     ...state,
     countries: [],
     loading: false,
     error: null,
   })),
-
-  //search query in state
   on(CountryActions.setSearchQuery, (state, { query }) => ({
     ...state,
     searchQuery: query,
   })),
-
-  // filter region in state
   on(CountryActions.setFilterRegion, (state, { region }) => ({
     ...state,
     filterRegion: region,
   }))
 );
 
+//  Moved below reducer declaration
 export const countriesFeature = createFeature({
   name: 'countries',
   reducer: countryReducer,
