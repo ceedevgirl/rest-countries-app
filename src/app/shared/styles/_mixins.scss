@@ -1,0 +1,73 @@
+// styles/_mixins.scss
+
+@use '../styles/variables' as *;
+
+@mixin mobile {
+  @media (max-width: #{$mobile}) {
+    @content;
+  }
+}
+
+@mixin tablet {
+  @media (max-width: #{$tablet}) {
+    @content;
+  }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop}) {
+    @content;
+  }
+}
+
+@mixin container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: $spacing-md;
+  display: block;
+}
+
+@mixin button-base {
+  background: var(--element-color);
+  border: none;
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: $shadow-sm;
+  transition: background-color 0.2s ease, transform 0.2s ease;
+
+  &:hover {
+    background: var(--element-hover-color);
+  }
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+@mixin card {
+  background: var(--element-color);
+  border-radius: 8px;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-lg;
+  }
+}
+
+@mixin loading-spinner {
+  width: 3rem;
+  height: 3rem;
+  border: 2px solid var(--text-color);
+  border-top: 2px solid transparent;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

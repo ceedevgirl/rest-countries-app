@@ -1,0 +1,10 @@
+<select
+  class="region-select"
+  [value]="region"
+  (change)="handleSelect($event)"
+>
+  <option value="">Filter by Region</option>
+  @for (r of regions; track r) {
+    <option [value]="r">{{ r }}</option>
+  }
+</select>

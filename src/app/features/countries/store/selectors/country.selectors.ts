@@ -1,20 +1,34 @@
-// src/app/features/countries/store/country.selectors.ts
-
-import { createSelector } from '@ngrx/store';
 import { countriesFeature } from '../reducers/country.reducer';
+import { createSelector } from '@ngrx/store';
+import { Country } from '../../../../core/models/country.interface';
 
-export const selectCountries = createSelector(
+// Access state using correct selectors from `createFeature`
+export const {
+  selectCountriesState,
+  selectLoading,
+  selectError,
+  selectSearchQuery,
+  selectFilterRegion,
+} = countriesFeature;
+
+// Derived Selector: Filtered Countries
+export const selectFilteredCountries = createSelector(
   countriesFeature.selectCountriesState,
-  (state) => state.countries
-);
+  selectSearchQuery,
+  selectFilterRegion,
+  (state, query, region) => {
+    let result = state.countries;
 
-export const selectLoading = createSelector(
-  countriesFeature.selectCountriesState,
-  (state) => state.loading
-);
+    if (query) {
+      result = result.filter((c) =>
+        c.name.common.toLowerCase().includes(query.toLowerCase())
+      );
+    }
 
-export const selectError = createSelector(
-  countriesFeature.selectCountriesState,
-  (state) => state.error
-);
+    if (region) {
+      result = result.filter((c) => c.region.toLowerCase() === region.toLowerCase());
+    }
 
+    return result;
+  }
+);

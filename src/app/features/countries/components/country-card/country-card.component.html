@@ -1,0 +1,27 @@
+<a
+  class="card-link"
+  [routerLink]="['/countries', country.cca3]"
+>
+  <article class="card">
+    <img
+      [ngSrc]="country.flags.png"
+      [alt]="country.flags.alt || country.name.common"
+      [width]="320"
+      [height]="213"
+      class="flag"
+      priority
+    />
+
+    <div class="card-content">
+      <h2 class="country-name">{{ country.name.common }}</h2>
+      <ul class="details">
+        <li><strong>Population:</strong> {{ country.population | number }}</li>
+        <li><strong>Region:</strong> {{ country.region }}</li>
+
+        @if (country.capital.length) {
+          <li><strong>Capital:</strong> {{ country.capital[0] }}</li>
+        }
+      </ul>
+    </div>
+  </article>
+</a>
