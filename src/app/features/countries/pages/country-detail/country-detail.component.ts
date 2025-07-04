@@ -1,14 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Country } from '../../../../core/models/country.interface';
 import { CommonModule, AsyncPipe, DecimalPipe } from '@angular/common';
-import { Observable } from 'rxjs';
+import { Observable, switchMap, of } from 'rxjs';
 import { CountryActions } from '../../store/actions/country.actions';
-import {
-  selectLoading,
-  selectSelectedCountry
-} from '../../store/selectors/country.selectors';
+import { selectSelectedCountry, selectLoading} from '../../store/selectors/country.selectors';
+import { CountryApiService } from '../../../../core/services/country-api.service';
 
 @Component({
   selector: 'app-country-detail',
@@ -19,15 +17,34 @@ import {
 })
 export class CountryDetailComponent implements OnInit {
   country$!: Observable<Country | null>;
+  borderCountries$!: Observable<Country[]>;
+  loading$!: Observable<boolean>;
 
-  constructor(private store: Store, private route: ActivatedRoute) {}
+  private store = inject(Store);
+  private route = inject(ActivatedRoute);
+  private api = inject(CountryApiService);
 
   ngOnInit(): void {
-    const code = this.route.snapshot.paramMap.get('code');
-    if (code) {
-      this.store.dispatch(CountryActions.loadCountryByCode({ code }));
-    }
+    // ✅ Trigger effect when `:code` changes (even on same route)
+    this.route.paramMap.subscribe(params => {
+      const code = params.get('code');
+      if (code) {
+        this.store.dispatch(CountryActions.loadCountryByCode({ code }));
+      }
+    });
+
+    // Select current country from store
     this.country$ = this.store.select(selectSelectedCountry);
+     this.loading$ = this.store.select(selectLoading); 
+
+    // Dynamically fetch border country names
+    this.borderCountries$ = this.country$.pipe(
+      switchMap((country) =>
+        country?.borders?.length
+          ? this.api.getCountriesByCodes(country.borders)
+          : of([])
+      )
+    );
   }
 
   getNativeName(country: Country): string {
@@ -39,7 +56,7 @@ export class CountryDetailComponent implements OnInit {
 
   getCurrencies(country: Country): string {
     return country.currencies
-      ? Object.values(country.currencies).map(c => c.name).join(', ')
+      ? Object.values(country.currencies).map((c) => c.name).join(', ')
       : 'N/A';
   }
 

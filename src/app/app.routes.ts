@@ -9,7 +9,7 @@ export const routes: Routes = [
     pathMatch: 'full',
   },
  {
-  path: 'details/:code', // ✅ correct spelling
+  path: 'details/:code', 
   loadComponent: () =>
     import('./features/countries/pages/country-detail/country-detail.component').then(
       m => m.CountryDetailComponent
@@ -17,6 +17,6 @@ export const routes: Routes = [
 },
   {
     path: '**',
-    redirectTo: '', // fallback to home
+    redirectTo: '', 
   },
 ];

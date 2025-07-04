@@ -205,3 +205,69 @@
     }
   }
 }
+
+// Skeleton Loader for Country Detail
+.skeleton-detail {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-2xl;
+  animation: pulse 1.5s ease-in-out infinite;
+
+  .skeleton-flag {
+    width: 100%;
+    height: 240px;
+    background-color: #e0e0e0;
+    border-radius: 8px;
+  }
+
+  .skeleton-info {
+    display: flex;
+    flex-direction: column;
+    gap: $spacing-md;
+
+    .skeleton-line {
+      height: 16px;
+      width: 100%;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+
+      &.short {
+        width: 40%;
+      }
+
+      &.medium {
+        width: 60%;
+      }
+
+      &.long {
+        width: 80%;
+      }
+    }
+  }
+
+  @include tablet {
+    flex-direction: row;
+
+    .skeleton-flag {
+      flex: 1;
+      height: 320px;
+    }
+
+    .skeleton-info {
+      flex: 1;
+      padding-left: $spacing-xl;
+    }
+  }
+}
+
+@keyframes pulse {
+  0% {
+    background-color: #e0e0e0;
+  }
+  50% {
+    background-color: #f0f0f0;
+  }
+  100% {
+    background-color: #e0e0e0;
+  }
+}
