@@ -1,35 +1,35 @@
+// src/app/features/countries/pages/country-list/country-list.component.ts
+
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
-import { AsyncPipe } from '@angular/common';
-// import { If, For } from '@angular/core';
-
+import { Observable } from 'rxjs';
 import { Country } from '../../../../core/models/country.interface';
 import { CountryActions } from '../../store/actions/country.actions';
 import {
   selectFilteredCountries,
-  selectLoading as selectCountryLoading,
+  selectLoading,
   selectSearchQuery,
-  selectFilterRegion,
+  selectFilterRegion
 } from '../../store/selectors/country.selectors';
 
-import { CountryCardComponent } from '../../components/country-card/country-card.component'; 
+// all components and pipes used in your template
+import { CountryCardComponent } from '../../components/country-card/country-card.component';
 import { CountrySearchBarComponent } from '../../components/country-search-bar/country-search-bar.component';
 import { RegionFilterComponent } from '../../components/region-filter/region-filter.component';
-import { RouterLink } from '@angular/router';
+
+import { AsyncPipe } from '@angular/common'; // required for | async and | json
 
 @Component({
   selector: 'app-country-list',
   standalone: true,
+  templateUrl: './country-list.component.html',
+  styleUrls: ['./country-list.component.scss'],
   imports: [
-    AsyncPipe,
+    AsyncPipe, 
     CountryCardComponent,
     CountrySearchBarComponent,
     RegionFilterComponent
   ],
-  templateUrl: './country-list.component.html',
-  styleUrls: ['./country-list.component.scss'],
 })
 export class CountryListComponent implements OnInit {
   filteredCountries$: Observable<Country[]>;
@@ -37,12 +37,11 @@ export class CountryListComponent implements OnInit {
   searchQuery$: Observable<string>;
   filterRegion$: Observable<string>;
 
-  private searchSubject = new Subject<string>();
-  regions: string[] = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
+  regions = ['Africa', 'Americas', 'Asia', 'Europe', 'Oceania'];
 
   constructor(private store: Store) {
     this.filteredCountries$ = this.store.select(selectFilteredCountries);
-    this.loading$ = this.store.select(selectCountryLoading);
+    this.loading$ = this.store.select(selectLoading);
     this.searchQuery$ = this.store.select(selectSearchQuery);
     this.filterRegion$ = this.store.select(selectFilterRegion);
   }
@@ -50,16 +49,14 @@ export class CountryListComponent implements OnInit {
   ngOnInit(): void {
     this.store.dispatch(CountryActions.loadCountries());
 
-    this.searchSubject.pipe(
-      debounceTime(300),
-      distinctUntilChanged()
-    ).subscribe((query) => {
-      this.store.dispatch(CountryActions.setSearchQuery({ query }));
-    });
+    // Debug
+    this.filteredCountries$.subscribe((countries) =>
+      console.log('[Component] filteredCountries:', countries)
+    );
   }
 
   onSearchChange(query: string): void {
-    this.searchSubject.next(query);
+    this.store.dispatch(CountryActions.setSearchQuery({ query }));
   }
 
   onRegionChange(region: string): void {

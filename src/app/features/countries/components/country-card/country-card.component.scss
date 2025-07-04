@@ -1,66 +1,52 @@
-@use '../../../../shared/styles/variables'as *;
-@use '../../../../shared/styles/mixins'as *;
+@use '../../../../shared/styles/variables' as *;
+@use '../../../../shared/styles/mixins' as *;
 
-
-.card-link {
+:host {
   display: block;
-  color: inherit;
-  text-decoration: none;
-
-  &:hover .card {
-    box-shadow: 0 0 0 2px var(--accent-color);
-    transform: translateY(-2px);
-  }
 }
 
-
 .card {
-    @include card;
-    cursor: pointer;
- display: flex;
-  flex-direction: column;
-  height: 100%;
-  min-height: 380px;
-
-    .flag {
-         width: 100%;
-    height: 300px;
-    // object-fit: cover;
-    display: block;
-        overflow: hidden;
-    }
-
-    .card-content {
-        padding: $spacing-xl;
-         flex-grow: 1;
+  @include card;
+  text-decoration: none;
+  color: var(--text-color);
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  height: 100%;
 
-        .country-name {
-            font-size: $font-size-xl;
-            font-weight: $font-weight-extrabold;
-            margin: 0 0 $spacing-lg 0;
-            color: var(--text-color);
-        }
+  .flag {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+    display: block;
+  }
 
-        .details {
-            list-style: none;
-            padding: 0;
-            margin: 0;
+  .card-content {
+    padding: $spacing-md;
+    flex: 1;
 
-            li {
-                list-style: none;
-                margin: 0 0 $spacing-xs 0;
-                font-size: $font-size-base;
-                line-height: 1.6;
-                color: var(--text-color);
-            }
-
-            strong {
-                color: var(--text);
-                font-weight: $font-weight-semibold;
-            }
-        }
+    .country-name {
+      margin-bottom: $spacing-sm;
+      font-size: $font-size-xl;
+      font-weight: $font-weight-extrabold;
     }
+
+    p {
+      margin: $spacing-xs 0;
+      font-size: $font-size-base;
+
+      strong {
+        font-weight: $font-weight-semibold;
+      }
+    }
+  }
+
+  @include tablet {
+    .card-content {
+      padding: $spacing-lg;
+
+      .country-name {
+        font-size: $font-size-2xl;
+      }
+    }
+  }
 }
