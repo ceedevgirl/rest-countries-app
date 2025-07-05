@@ -1,10 +1,42 @@
-<select
-  class="region-select"
-  [value]="region"
-  (change)="handleSelect($event)"
->
-  <option value="">Filter by Region</option>
-  @for (r of regions; track r) {
-    <option [value]="r">{{ r }}</option>
+<div class="custom-filter">
+  <button
+    type="button"
+    class="filter-trigger"
+    (click)="toggleDropdown()"
+    [class.open]="isOpen"
+    aria-haspopup="listbox"
+    [attr.aria-expanded]="isOpen"
+  >
+    <span>{{ region || 'Filter by Region' }}</span>
+
+    <svg
+      class="arrow-icon"
+      xmlns="http://www.w3.org/2000/svg"
+      width="24"
+      height="24"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+    >
+      <path d="m6 9 6 6 6-6" />
+    </svg>
+  </button>
+
+  @if (isOpen) {
+  <ul class="filter-panel" role="listbox">
+    @for (r of regions; track r) {
+    <li
+      class="filter-option"
+      role="option"
+      [attr.aria-selected]="r === region"
+      (click)="selectRegion(r)"
+    >
+      {{ r }}
+    </li>
+    }
+  </ul>
   }
-</select>
+</div>

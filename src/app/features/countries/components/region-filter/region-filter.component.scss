@@ -1,13 +1,60 @@
-.region-select {
-  padding: 0.75rem 1rem;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 1rem;
-  background-color: var(--bg);
-  color: var(--text);
+@use '../../../../shared/styles/variables' as *;
+@use '../../../../shared/styles/mixins' as *;
 
-  &:focus {
-    border-color: #0077ff;
-    box-shadow: 0 0 0 2px rgba(0, 119, 255, 0.2);
+.custom-filter {
+  position: relative;
+  width: 200px;
+  font-family: $font-family;
+}
+
+.filter-trigger {
+  @include button-base; 
+  width: 100%;
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: $spacing-sm $spacing-lg;
+  font-size: $font-size-base;
+  text-align: left; 
+
+  // Style the arrow icon
+  .arrow-icon {
+    width: 12px;
+    height: 12px;
+    stroke: var(--text-color); 
+    transition: transform 0.2s ease-in-out;
   }
+
+  // Rotate the arrow when the dropdown is open
+  &.open .arrow-icon {
+    transform: rotate(180deg);
+  }
+}
+
+.filter-panel {
+  position: absolute;
+  top: calc(100% + 8px); // Position below the trigger with a small gap
+  left: 0;
+  right: 0;
+  z-index: 10;
+  background: var(--element-color);
+  border-radius: 8px;
+  box-shadow: $shadow-sm;
+  padding: $spacing-sm 0;
+  list-style: none;
+  margin: 0;
+  overflow: hidden; // Ensures list items respect the border-radius
+}
+
+.filter-option {
+  padding: $spacing-sm $spacing-xl;
+  font-size: $font-size-base;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+    
+    &:hover {
+      background-color: rgba(0, 119, 255, 0.1);
+    }
+    
 }

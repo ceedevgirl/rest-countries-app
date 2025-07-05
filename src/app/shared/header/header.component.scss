@@ -1,0 +1,31 @@
+@use '../styles/variables' as *;
+@use '../styles/mixins' as *;
+
+.app-header {
+  background: var(--element-color);
+  box-shadow: $shadow-sm;
+  padding: 0 0.5rem;
+
+  .container {
+    @include container;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .title {
+    color: var(--text-color);
+    font-weight: $font-weight-semibold;
+    text-wrap: nowrap;
+    font-size: $font-size-sm;
+
+    @include tablet {
+      font-size: $font-size-2xl;
+    }
+
+    @include desktop {
+      font-size: $font-size-3xl;
+    }
+  }
+}

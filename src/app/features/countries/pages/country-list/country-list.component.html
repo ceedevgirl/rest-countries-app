@@ -1,6 +1,9 @@
 <section class="controls">
   <app-country-search-bar (onSearch)="onSearchChange($event)" />
-  <app-region-filter [regions]="regions" (onRegion)="onRegionChange($event)" />
+  <app-region-filter 
+  [regions]="regions"
+  [region]="(filterRegion$ | async) || ''"
+  (onRegion)="onRegionChange($event)" />
 </section>
 
 
