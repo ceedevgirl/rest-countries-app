@@ -37,7 +37,8 @@
   &:focus {
     outline: 2px solid var(--primary-light-blue);
     outline-offset: -1px;
-    box-shadow: $shadow-sm;  
+   box-shadow: 0 0 0 4px rgba(83, 96, 238, 0.2);
+
   }
 
   // Desktop styles
@@ -81,16 +82,15 @@
   outline: 2px solid #ef4444; 
    color: #ef4444; 
 box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+
+
 }
 
 .search-container.error {
   animation: shake 0.3s ease-in-out;
 }
 
-.search-container.error .search-input::placeholder {
-  color: #ef4444;
-  opacity: 0.7; // Make the placeholder slightly less intense
-}
+
 
 @keyframes shake {
   0%,
