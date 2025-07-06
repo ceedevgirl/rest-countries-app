@@ -12,10 +12,15 @@ import { CommonModule } from '@angular/common';
 })
 export class CountrySearchBarComponent {
   @Input() query: string = '';
+  @Input() hasError: boolean = false;
   @Output() onSearch = new EventEmitter<string>();
 
   handleInput(event: Event): void {
     const value = (event.target as HTMLInputElement).value;
     this.onSearch.emit(value);
+  }
+
+   clearSearch(): void {
+    this.onSearch.emit('');
   }
 }

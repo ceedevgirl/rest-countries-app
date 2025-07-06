@@ -25,18 +25,22 @@
     </svg>
   </button>
 
-  @if (isOpen) {
-  <ul class="filter-panel" role="listbox">
-    @for (r of regions; track r) {
-    <li
-      class="filter-option"
-      role="option"
-      [attr.aria-selected]="r === region"
-      (click)="selectRegion(r)"
-    >
-      {{ r }}
-    </li>
-    }
-  </ul>
+ @if (isOpen) {
+<ul class="filter-panel" role="listbox">
+  <li class="filter-option" role="option" (click)="selectRegion('')">
+    All Regions
+  </li>
+
+  @for (r of regions; track r) {
+  <li
+    class="filter-option"
+    role="option"
+    [attr.aria-selected]="r === region"
+    (click)="selectRegion(r)"
+  >
+    {{ r }}
+  </li>
   }
+</ul>
+}
 </div>

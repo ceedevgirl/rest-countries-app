@@ -9,6 +9,7 @@ export interface CountryState {
   searchQuery: string;
   filterRegion: string;
   selectedCountry: Country | null;
+  currentPage: number; 
 }
 
 export const initialState: CountryState = {
@@ -18,6 +19,7 @@ export const initialState: CountryState = {
   searchQuery: '',
   filterRegion: '',
   selectedCountry: null,
+   currentPage: 1,
 };
 
 const countryReducer = createReducer(
@@ -64,8 +66,13 @@ const countryReducer = createReducer(
   on(CountryActions.setFilterRegion, (state, { region }) => ({
     ...state,
     filterRegion: region,
+  })),
+ on(CountryActions.setCurrentPage, (state, { page }) => ({
+    ...state,
+    currentPage: page,
   }))
 );
+
 
 //  Moved below reducer declaration
 export const countriesFeature = createFeature({

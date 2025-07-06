@@ -1,6 +1,11 @@
 @use '../../../../shared/styles/variables' as *;
 @use '../../../../shared/styles/mixins' as *;
 
+.search-container {
+  position: relative;
+  width: 100%;
+}
+
 .search-input {
   width: 100%;
   height: 48px;
@@ -40,5 +45,62 @@
     width: 600px;
     font-size: $font-size-xl;
     padding: $spacing-lg $spacing-xl $spacing-lg $spacing-3xl;
+  }
+}
+  .cancel-button {
+  position: absolute;
+  top: 50%;
+  right: $spacing-lg;
+  transform: translateY(-50%);
+
+  // Style the button itself
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: $spacing-xs;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+
+  // Style the SVG icon inside
+  svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--text-color);
+    opacity: 0.6;
+    transition: opacity 0.2s ease;
+  }
+
+  &:hover svg {
+    opacity: 1;
+  }
+}
+
+.search-container.error .search-input {
+  outline: 2px solid #ef4444; 
+   color: #ef4444; 
+box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.2);
+}
+
+.search-container.error {
+  animation: shake 0.3s ease-in-out;
+}
+
+.search-container.error .search-input::placeholder {
+  color: #ef4444;
+  opacity: 0.7; // Make the placeholder slightly less intense
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  25% {
+    transform: translateX(-4px);
+  }
+  75% {
+    transform: translateX(4px);
   }
 }

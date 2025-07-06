@@ -3,7 +3,9 @@
 
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  height: calc(100vh - 40px);
   padding: 2rem;
   max-width: 1200px;
   margin: auto;
@@ -26,8 +28,15 @@
 .empty-text {
   text-align: center;
   font-size: 1.1rem;
-  color: #666;
   margin-top: 2rem;
+}
+
+.loading-text {
+  color: $dark-gray;
+}
+
+.empty-text {
+  color: #ef4444;
 }
 
 .country-grid {
@@ -70,5 +79,9 @@
 }
 
 
-
+.content-area {
+  flex: 1; 
+  overflow-y: auto; 
+  padding: 0 $spacing-xl;
+}
 

@@ -1,28 +1,37 @@
 <section class="controls">
-  <app-country-search-bar (onSearch)="onSearchChange($event)" />
+  <app-country-search-bar  [query]="(searchQuery$ | async) || ''" 
+  (onSearch)="onSearchChange($event)"
+   [hasError]="(totalCountries$ | async) === 0 && (loading$ | async) === false" />
   <app-region-filter 
   [regions]="regions"
   [region]="(filterRegion$ | async) || ''"
   (onRegion)="onRegionChange($event)" />
 </section>
 
-
-@if (loading$ | async) {
+<div class="content-area">
+  @if (loading$ | async) {
   <section class="skeleton-grid">
-    @for (i of [1, 2, 3, 4, 5, 6, 7, 8]; track i) {
-      <div class="skeleton-card"></div>
+    @for (i of [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]; track i) {
+    <div class="skeleton-card"></div>
     }
   </section>
-} @else {
-  @let countries = (filteredCountries$ | async) ?? [];
-
-  @if (countries.length === 0) {
-    <p class="empty-text">No countries match your search.</p>
   } @else {
-    <section class="country-grid">
-      @for (country of countries; track country.cca3) {
-        <app-country-card [country]="country" />
-      }
-    </section>
-  }
-}
+  @let countries = (paginatedCountries$ | async) ?? [];
+
+  @if ((totalCountries$ | async) === 0) {
+  <p class="empty-text">No countries match your search.</p>
+  } @else {
+  <section class="country-grid">
+    @for (country of countries; track country.cca3) {
+    <app-country-card [country]="country" />
+    }
+  </section>
+  } }
+</div>
+
+<app-pagination
+  [currentPage]="(currentPage$ | async) ?? 1"
+  [totalItems]="(totalCountries$ | async) ?? 0"
+  [itemsPerPage]="itemsPerPage"
+  (pageChange)="onPageChange($event)"
+></app-pagination>

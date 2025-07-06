@@ -1,6 +1,5 @@
 import { countriesFeature } from '../reducers/country.reducer';
 import { createSelector } from '@ngrx/store';
-import { Country } from '../../../../core/models/country.interface';
 
 // Base selectors from createFeature
 export const {
@@ -9,6 +8,7 @@ export const {
   selectError,
   selectSearchQuery,
   selectFilterRegion,
+  selectCurrentPage, 
 } = countriesFeature;
 
 // Filtered list of countries for list page
@@ -26,8 +26,8 @@ export const selectFilteredCountries = createSelector(
     }
 
     if (region) {
-      result = result.filter((c) =>
-        c.region.toLowerCase() === region.toLowerCase()
+      result = result.filter(
+        (c) => c.region.toLowerCase() === region.toLowerCase()
       );
     }
 
@@ -35,7 +35,7 @@ export const selectFilteredCountries = createSelector(
   }
 );
 
-// ✅ Single country for details page
+// Single country for details page
 export const selectSelectedCountry = createSelector(
   selectCountriesState,
   (state) => state.selectedCountry

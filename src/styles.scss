@@ -17,7 +17,12 @@ html, body {
   background: var(--bg-color);
   color: var(--text-color);
   transition: background-color 0.3s ease, color 0.3s ease;
+   scrollbar-width: thin;
+  // Sets thumb and track colors respectively
+  scrollbar-color: $dark-gray var(--bg-color);
 }
+
+
 
 p {
   margin: 0;
@@ -36,4 +41,5 @@ img {
 .container {
   @include container;
 }
+
 
