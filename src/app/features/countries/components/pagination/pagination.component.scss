@@ -1,0 +1,60 @@
+@use '../../../../shared/styles/variables' as *;
+@use '../../../../shared/styles/mixins' as *;   
+.pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: $spacing-md;
+  margin-top: $spacing-2xl;
+  flex-wrap: wrap;
+}
+
+.page-list {
+  display: flex;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  gap: $spacing-sm;
+}
+
+.page-button {
+    @include button-base;
+  background: transparent;
+  border: 1px solid $dark-gray;
+  color: var(--text-color);
+  cursor: pointer;
+  border-radius: 8px;
+  min-width: 40px;
+  height: 40px;
+  padding: $spacing-sm;
+  font-family: $font-family;
+  font-weight: $font-weight-semibold;
+  transition: all 0.2s ease;
+
+  &:hover:not(:disabled) {
+    border-color: var(--primary-light-blue);
+    color: var(--primary-light-blue);
+  }
+
+  &.active {
+   background-color: var(--primary-light-blue);
+    border-color: var(--primary-light-blue);
+    color: $white;
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+  .ellipsis {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  color: var(--text-color);
+  opacity: 0.5;
+}
+

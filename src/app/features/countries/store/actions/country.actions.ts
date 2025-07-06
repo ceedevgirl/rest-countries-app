@@ -41,6 +41,11 @@ const setFilterRegion = createAction(
   props<{ region: string }>()
 );
 
+const setCurrentPage = createAction(
+  '[Country] Set Current Page',
+  props<{ page: number }>()
+);
+
 // Export grouped for reducer/effects use
 export const CountryActions = {
   loadCountries,
@@ -50,5 +55,6 @@ export const CountryActions = {
   setSearchQuery,
   setFilterRegion,
   loadCountryByCode,
-  loadCountryByCodeSuccess
+  loadCountryByCodeSuccess,
+  setCurrentPage,
 };

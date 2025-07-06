@@ -25,7 +25,7 @@ export class CountryDetailComponent implements OnInit {
   private api = inject(CountryApiService);
 
   ngOnInit(): void {
-    // ✅ Trigger effect when `:code` changes (even on same route)
+    // Trigger effect when `:code` changes (even on same route)
     this.route.paramMap.subscribe(params => {
       const code = params.get('code');
       if (code) {
